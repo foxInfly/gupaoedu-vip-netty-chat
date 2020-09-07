@@ -9,11 +9,19 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import org.json.simple.JSONObject;
 
+/**
+ * 处理直接发送IMMessage对象的IDE控制台
+ */
 @Slf4j
 public class TerminalServerHandler extends SimpleChannelInboundHandler<IMMessage>{
 
 	private MsgProcessor processor = new MsgProcessor();
-	
+
+    /**
+     * 业务处理
+     * @param ctx ChannelHandlerContext
+     * @param msg IMMessage
+     */
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, IMMessage msg) throws Exception {
 	    processor.sendMsg(ctx.channel(), msg);

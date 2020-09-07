@@ -12,11 +12,19 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 
+/**
+ * 用来处理websocket协议的
+ */
 @Slf4j
 public class WebSocketServerHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
 
 	private MsgProcessor processor = new MsgProcessor();
-	
+
+    /**
+     * 业务处理
+     * @param ctx ChannelHandlerContext
+     * @param msg TextWebSocketFrame
+     */
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx,TextWebSocketFrame msg) throws Exception {
 		processor.sendMsg(ctx.channel(), msg.text());

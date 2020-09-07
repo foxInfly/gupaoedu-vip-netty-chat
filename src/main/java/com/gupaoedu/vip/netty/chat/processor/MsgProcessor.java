@@ -15,7 +15,6 @@ import io.netty.util.concurrent.GlobalEventExecutor;
 
 /**
  * 主要用于自定义协议内容的逻辑处理
- *
  */
 public class MsgProcessor {
 	
@@ -65,8 +64,7 @@ public class MsgProcessor {
 	
 	/**
 	 * 获取扩展属性
-	 * @param client
-	 * @return
+	 * @param client Channel
 	 */
 	private void setAttrs(Channel client,String key,Object value){
 		try{
@@ -82,7 +80,7 @@ public class MsgProcessor {
 	
 	/**
 	 * 登出通知
-	 * @param client
+	 * @param client Channel
 	 */
 	public void logout(Channel client){
 		//如果nickName为null，没有遵从聊天协议的连接，表示未非法登录
@@ -96,9 +94,9 @@ public class MsgProcessor {
 	}
 	
 	/**
-	 * 发送消息
-	 * @param client
-	 * @param msg
+	 * 发送消息（netty）
+	 * @param client Channel
+	 * @param msg IMMessage
 	 */
 	public void sendMsg(Channel client,IMMessage msg){
 
@@ -106,9 +104,9 @@ public class MsgProcessor {
 	}
 	
 	/**
-	 * 发送消息
-	 * @param client
-	 * @param msg
+	 * 发送消息（）
+	 * @param client Channel
+	 * @param msg String
 	 */
 	public void sendMsg(Channel client,String msg){
 

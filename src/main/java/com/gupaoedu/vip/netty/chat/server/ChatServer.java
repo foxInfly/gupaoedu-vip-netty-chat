@@ -28,6 +28,7 @@ public class ChatServer{
 	
 	private int port = 10080;
     public void start(int port){
+        //主从线程模型的线程池
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         try {

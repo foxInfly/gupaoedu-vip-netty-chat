@@ -18,14 +18,19 @@ public class IMDecoder extends ByteToMessageDecoder {
 
 	//解析IM写一下请求内容的正则
 	private Pattern pattern = Pattern.compile("^\\[(.*)\\](\\s\\-\\s(.*))?");
-	
+
+	/**
+	 * 解码，把流解码成对象 （netty内部调用）
+	 * @param ctx channel handler context
+	 * @param in byte buffer
+	 * @param out List<Object> 解码后的对象list集合
+	 */
 	@Override
 	protected void decode(ChannelHandlerContext ctx, ByteBuf in,List<Object> out) throws Exception {
 		try{
-			//先获取可读字节数
-	        final int length = in.readableBytes();
+	        final int length = in.readableBytes();  //获取可读字节长度
 	        final byte[] array = new byte[length];
-	        String content = new String(array,in.readerIndex(),length);
+	        String content = new String(array,in.readerIndex(),length); //把字节编程字符串
 	        
 	        //空消息不解析
 	        if(!(null == content || "".equals(content.trim()))){
@@ -34,28 +39,28 @@ public class IMDecoder extends ByteToMessageDecoder {
 	        		return;
 	        	}
 	        }
-	        
-	        in.getBytes(in.readerIndex(), array, 0, length);
-	        out.add(new MessagePack().read(array,IMMessage.class));
-	        in.clear();
+	        in.getBytes(in.readerIndex(), array, 0, length);//把bytebuffer内的内容读取到byte[]中
+	        out.add(new MessagePack().read(array,IMMessage.class));//把byte[]转换成一个我们能够识别的IMMessage对象（这里是反序列化）
+	        in.clear();//清空ByteBuffer
 		}catch(MessageTypeException e){
 			ctx.channel().pipeline().remove(this);
 		}
 	}
 	
 	/**
-	 * 字符串解析成自定义即时通信协议
-	 * @param msg
-	 * @return
+	 * 字符串解析成自定义即时通信协议 （浏览器Websocket协议）
+	 * @param msg 字符串协议信息
+	 * @return IMMessage
 	 */
 	public IMMessage decode(String msg){
 		if(null == msg || "".equals(msg.trim())){ return null; }
+		//解析字符串最好的办法：正则
 		try{
 			Matcher m = pattern.matcher(msg);
 			String header = "";
 			String content = "";
 			if(m.matches()){
-				header = m.group(1);
+				header = m.group(1);//获取（）中的内容
 				content = m.group(3);
 			}
 			

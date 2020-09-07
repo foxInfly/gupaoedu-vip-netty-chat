@@ -19,14 +19,14 @@ public enum IMP {
 	private String name;
 
     /**
-     *
-     * @param content
+     * 判断传进来的命令是否是IMP规定的
+     * @param content 通信内容
      * @return boolean
      */
 	public static boolean isIMP(String content){
 		return content.matches("^\\[(SYSTEM|LOGIN|LOGIN|CHAT)\\]");
 	}
-	
+
 	IMP(String name){
 		this.name = name;
 	}

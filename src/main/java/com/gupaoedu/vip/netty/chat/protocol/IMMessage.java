@@ -6,20 +6,19 @@ import org.msgpack.annotation.Message;
 
 
 /**
- * 自定义消息实体类
- *
+ * Java中传播自定义协议的消息实体类
  */
-@Message
+@Message//java消息体
 @Data
 public class IMMessage{
 	
-	private String addr;		//IP地址及端口
+	private String addr;	//IP地址及端口
 	private String cmd;		//命令类型[LOGIN]或者[SYSTEM]或者[LOGOUT]
 	private long time;		//命令发送时间
 	private int online;		//当前在线人数
 	private String sender;  //发送人
 	private String receiver;	//接收人
-	private String content;	//消息内容
+	private String content;	  //消息内容
 	private String terminal; //终端
 	
 	public IMMessage(){}
